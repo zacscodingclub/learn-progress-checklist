@@ -13,6 +13,10 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  get '/signup' do
+    erb :'users/new'
+  end
+
   # helpers do
   #   def logged_in?
   #     !!session[:user_id]
@@ -26,5 +30,5 @@ class ApplicationController < Sinatra::Base
   #     session.clear
   #     redirect '/login'
   #   end
-  #end
+  # end
 end

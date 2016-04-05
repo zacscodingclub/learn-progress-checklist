@@ -5,4 +5,8 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 use Rack::MethodOverride
+use LecturesController
+use NotesController
+use TagsController
+use UsersController
 run ApplicationController
