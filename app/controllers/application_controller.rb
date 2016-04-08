@@ -13,10 +13,11 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-  get '/signup' do
-    erb :'users/new'
-  end
-
+  # commenting out these helpers made server work.
+  #   - find out why?
+  #        User table or associations not valid?
+  #        redirect '/login'
+  # 
   # helpers do
   #   def logged_in?
   #     !!session[:user_id]

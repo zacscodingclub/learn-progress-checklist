@@ -1,9 +1,11 @@
 class Role < ActiveRecord::Base
   has_many :users
 
-  # 1. Basic User
-  # 2. Admin
-  # 3. SuperAdmin
+  ROLES = {
+      0 => "super_user",
+     10 => "admin",
+     20 => "user",
+    100 => "public"
+  }
 
-  # plan_id, user_id
 end

@@ -11,11 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401031523) do
+ActiveRecord::Schema.define(version: 20160408030213) do
+
+  create_table "lectures", force: :cascade do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "watched",    default: 0
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text    "content"
+    t.integer "user_id"
+    t.integer "lecture_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer "roll_id"
+    t.integer "user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.text    "tag_name"
+    t.integer "lecture_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
-    t.string "username"
+    t.string "learn_name"
     t.string "password_digest"
   end
 

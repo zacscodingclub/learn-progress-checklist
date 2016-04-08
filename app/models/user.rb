@@ -4,13 +4,4 @@ class User < ActiveRecord::Base
   has_many :notes, through: :lectures
 
   has_secure_password
-
-  # id
-  # email
-  # username
-  # password_digest
-  # learn_name
-  # lectures
-  # notes
-  # role
 end
