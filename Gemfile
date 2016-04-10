@@ -12,6 +12,8 @@ gem 'pry'
 gem 'bcrypt'
 gem 'nokogiri'
 gem "tux"
+gem "google-api-client", '0.9'
+gem "googleauth"
 
 group :test do
   gem 'rspec'

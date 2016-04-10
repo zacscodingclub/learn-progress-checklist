@@ -1,0 +1,6 @@
+<h1>All Users</h1>
+<ol>
+  <% @users.each do |user| %>
+    <li><a href="/users/<%= user.learn_name %>"><%= user.learn_name %></a></li>
+  <% end %>
+</ol>

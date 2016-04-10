@@ -1,0 +1,39 @@
+<h1><%= @lecture.title %></h1>
+<br><br>
+<div class="row">
+  <div class="col-md-6">
+    <iframe width="550" height="415" src="<%= @lecture.embed_url %>" frameborder="0" allowfullscreen></iframe>
+    <p><%= @lecture.user.learn_name %> made this video.</p>
+    <% if @lecture.user_id == current_user.id %>
+      <a href="/lectures/<%= @lecture.slug %>/edit"><button>Edit</button></a>
+    <% end %>
+    <br>
+    <% if !@lecture.tags.empty? %>
+      <h4>Tags</h4>
+      <% @lecture.tags.each do |tag| %>
+        <button><%= tag.tag_name %></button>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <form action="/notes" method="post">
+      <label for="new_note">Make a Note</label>
+      <textarea name="note[content]" id="new_note" cols="70" rows="5"></textarea>
+      <br>
+      <input type="hidden" name="note[lecture_id]" value="<%= @lecture.id %>">
+      <input type="submit" name="submit">
+    </form>
+
+    <% if @lecture.notes.empty? %>
+      <p>Be the first to take a note!</p>
+    <% else %>
+      <h4>Other People's Notes</h4>
+      <ul>
+        <% @lecture.notes.each do |note| %>
+          <li><strong><%= User.find(note.user_id).learn_name %></strong> - <%= note.content %></li>
+        <% end %>
+      </ul>  
+    <% end %>
+  </div>
+</div>

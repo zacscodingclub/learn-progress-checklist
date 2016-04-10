@@ -1,0 +1,9 @@
+<h1>All Lectures</h1>
+<br>
+<a href="/lectures/new"><button>New Lecture</button></a>
+<br><br>
+<ul>
+  <% @lectures.each do |lecture| %>
+    <li><a href="/lectures/<%= lecture.slug %>"><%= lecture.title %></a> - <%= lecture.user.learn_name %></li>
+  <% end %>
+</ul>

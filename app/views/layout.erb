@@ -1,9 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin:1px;
+      }
+      ul {
+        list-style: none
+      }
+      /*.container {
+        border: 1px solid black;
+      */}
+    </style>
     <title>Learn Progress</title>
   </head>
+  <div class="container">
+    <div class="pull-left">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <% if breadcrumbs %>
+          <li class="active"><a href="/<%= breadcrumbs %>"><%= breadcrumbs.capitalize %></a></li>
+        <% end %>
+      </ol>
+      
+        
+    </div>
+    <% if logged_in? %>
+      <div class="pull-right">
+        Welcome, <%= current_user.learn_name %>
+        <a href="/logout"><button>Logout</button></a>
+      </div>
+    <% end %>
+      <br>
 
-  <%= yield %>
 
+    <%= yield %>
+  </div>
 </html>

@@ -1,1 +1,13 @@
-'hello world'
+<% if !logged_in? %>
+  <h1>Hi.</h1>
+  <h3>Welcome to the Learn-Co Lecture notes!</h3>
+  <p>Let's start learnin!</p>
+  <a href="/signup"><button>New User?</button></a><a href="/login"><button>Login</button></a>
+<% else %>
+  <h1>Hi <%= current_user.learn_name %>.</h1>
+  <h3>Welcome to the Learn-Co Lecture notes!</h3>
+  <p>Let's start learnin!</p>
+  <a href="/lectures"><button>Lectures</button></a>
+  <a href="/notes"><button>Notes</button></a>
+  <a href="/users"><button>Users</button></a>
+<% end %>

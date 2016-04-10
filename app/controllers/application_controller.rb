@@ -13,23 +13,28 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-  # commenting out these helpers made server work.
-  #   - find out why?
-  #        User table or associations not valid?
-  #        redirect '/login'
-  # 
-  # helpers do
-  #   def logged_in?
-  #     !!session[:user_id]
-  #   end
+  helpers do
+    def logged_in?
+      !!session[:user_id]
+    end
 
-  #   def current_user
-  #     User.find(session[:user_id])
-  #   end
+    def current_user
+      @current_user ||= User.find(session[:user_id])
+    end
 
-  #   def logout
-  #     session.clear
-  #     redirect '/login'
-  #   end
-  # end
+    def logout
+      session.clear
+      redirect '/login'
+    end
+
+    def breadcrumbs
+      path = request.env["PATH_INFO"]
+
+      if path.size < 2
+        false
+      else
+        request.env["PATH_INFO"].split("/")[1]
+      end
+    end
+  end
 end

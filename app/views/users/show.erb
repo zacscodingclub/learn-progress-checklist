@@ -1,0 +1,16 @@
+
+<h1>Profile</h1>
+<p>Welcome, <%= @user.learn_name %></p>
+
+<h3>Your Lectures</h3>
+<ul>
+  <% Lecture.select { |lecture| lecture.user_id == @user.id }.each do |lecture| %>
+    <li><a href="/lectures/<%= lecture.slug %>"><%= lecture.title %> </a></li>
+  <% end %>
+</ul>
+<h3>Your Notes</h3>
+<ul>
+  <% Note.select { |note| note.user_id == @user.id }.each do |note| %>
+    <li><a href="/lectures/<%= note.lecture.slug %>"><%= note.lecture.title %>  ~<%= note.content.split(" ").size %> word note</a></li>
+  <% end %>
+</ul>

@@ -1,0 +1,6 @@
+<h1>All Notes</h1>
+<ul>
+  <% @notes.each do |note| %>
+    <li><a href="/lectures/<%= note.lecture.slug %>"><%= note.lecture.title %>  ~<%= note.content.split(" ").size %> word note</a></li>
+  <% end %>
+</ul>

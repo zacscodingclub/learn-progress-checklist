@@ -3,12 +3,9 @@
 
 ## To-Do
 
-* Migration default values
 * Seed db
 * Features
 ** User
-*** Signup
-*** Signin/Signout
 *** Show/Edit
 ** Lecture
 ** Note
@@ -18,3 +15,6 @@
 ## Done?
 
 * Migrations
+* Migration default values
+* Signup
+* Signin/Signout
