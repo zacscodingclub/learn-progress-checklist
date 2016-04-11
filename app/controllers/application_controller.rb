@@ -15,7 +15,11 @@ class ApplicationController < Sinatra::Base
 
   helpers do
     def logged_in?
-      !!session[:user_id]
+      if session[:user_id]
+        !!current_user
+      else
+        false
+      end
     end
 
     def current_user
@@ -24,7 +28,8 @@ class ApplicationController < Sinatra::Base
 
     def logout
       session.clear
-      redirect '/login'
+      binding.pry
+      redirect '/'
     end
 
     def breadcrumbs

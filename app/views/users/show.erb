@@ -1,7 +1,9 @@
 
 <h1>Profile</h1>
 <p>Welcome, <%= @user.learn_name %></p>
-
+<% if current_user.id == @user.id %>
+  <a href="/users/<%= @current_user.learn_name %>/edit"><button>Edit Profile</button></a>
+<% end %>
 <h3>Your Lectures</h3>
 <ul>
   <% Lecture.select { |lecture| lecture.user_id == @user.id }.each do |lecture| %>

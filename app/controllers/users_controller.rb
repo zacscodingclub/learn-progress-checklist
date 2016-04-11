@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    erb :'users/new'
+    if logged_in?
+      redirect '/'
+    else
+      erb :'users/new'
+    end
   end
 
   post '/signup' do
@@ -43,14 +47,47 @@ class UsersController < ApplicationController
   end
 
   get '/users' do
-    @users = User.all
+    if logged_in?
+      @users = User.all
 
-    erb :'users/index'
+      erb :'users/index'
+    else
+      redirect "/login"
+    end
   end
 
-  get '/users/:slug' do 
-    @user = User.find_by_learn_name(params[:slug])
+  get '/users/:slug' do
+    if logged_in?
+      @user = User.find_by_learn_name(params[:slug])
 
-    erb :'users/show'
+      erb :'users/show'
+    else
+      redirect "/login"
+    end
+  end
+
+  get '/users/:slug/edit' do
+
+    if logged_in?
+      @user = User.find_by_learn_name(params[:slug])
+
+      erb :'users/edit'
+    else
+      redirect "/login"
+    end
+  end
+
+  patch '/users/:slug' do
+    if params[:email].empty? || params[:learn_name].empty?
+      redirect back
+    elsif logged_in?
+      @user = User.find_by_learn_name(params[:slug])
+      binding.pry
+      @user.update(email: params[:email],learn_name: params[:learn_name])
+
+      erb :'users/show'
+    else
+      redirect "/login"
+    end
   end
 end
