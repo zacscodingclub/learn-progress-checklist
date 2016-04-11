@@ -82,8 +82,7 @@ class UsersController < ApplicationController
       redirect back
     elsif logged_in?
       @user = User.find_by_learn_name(params[:slug])
-      binding.pry
-      @user.update(email: params[:email],learn_name: params[:learn_name])
+      @user.update(email: params[:email],learn_name: params[:learn_name], password: @user.password_digest)
 
       erb :'users/show'
     else

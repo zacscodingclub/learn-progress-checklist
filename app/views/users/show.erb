@@ -4,15 +4,24 @@
 <% if current_user.id == @user.id %>
   <a href="/users/<%= @current_user.learn_name %>/edit"><button>Edit Profile</button></a>
 <% end %>
-<h3>Your Lectures</h3>
-<ul>
-  <% Lecture.select { |lecture| lecture.user_id == @user.id }.each do |lecture| %>
-    <li><a href="/lectures/<%= lecture.slug %>"><%= lecture.title %> </a></li>
-  <% end %>
-</ul>
-<h3>Your Notes</h3>
-<ul>
-  <% Note.select { |note| note.user_id == @user.id }.each do |note| %>
-    <li><a href="/lectures/<%= note.lecture.slug %>"><%= note.lecture.title %>  ~<%= note.content.split(" ").size %> word note</a></li>
-  <% end %>
-</ul>
+<h3>Lectures</h3>
+<% if @user.lectures.empty? %>
+  <p><%= @user.learn_name %> has not added any lectures yet. :(</p>
+<% else %>
+  <ul>
+    <% @user.lectures.each do |lecture| %>
+      <li><a href="/lectures/<%= lecture.slug %>"><%= lecture.title %> </a></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>Notes</h3>
+<% if @user.notes.empty? %>
+  <p><%= @user.learn_name %> has not made any notes yet. :(</p>
+<% else %>
+  <ul>
+    <% @user.notes.each do |note| %>
+      <li><a href="/lectures/<%= note.lecture.slug %>"><%= note.lecture.title %>  ~<%= note.content.split(" ").size %> word note</a></li>
+    <% end %>
+  </ul>
+<% end %>

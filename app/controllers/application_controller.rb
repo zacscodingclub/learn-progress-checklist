@@ -28,7 +28,6 @@ class ApplicationController < Sinatra::Base
 
     def logout
       session.clear
-      binding.pry
       redirect '/'
     end
 

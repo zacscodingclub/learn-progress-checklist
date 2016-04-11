@@ -23,7 +23,7 @@ class LecturesController < ApplicationController
       redirect "/lectures/new"
     elsif logged_in?
       @lecture = Lecture.create(title: params[:lecture][:title], url: params[:lecture][:url], user_id: current_user.id)
-
+      binding.pry
       unless params[:lecture][:tag_ids].empty?
         @lecture.tags << Tag.create(tag_name: params[:lecture][:tag_ids], lecture_id: @lecture.id)
       end
