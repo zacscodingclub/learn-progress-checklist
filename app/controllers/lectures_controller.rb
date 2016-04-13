@@ -23,24 +23,30 @@ class LecturesController < ApplicationController
     if logged_in?
       params[:lecture][:user_id] = current_user.id
 
-      @lecture = Lecture.new_from_params(params)
+      if valid_url?(params[:lecture][:url])
+        @lecture = Lecture.new_from_params(params)
 
-      if @lecture.save
+        if @lecture.save
 
-        unless params[:lecture][:tag_ids].nil?
-          @lecture.tags_from_params(params)
+          unless params[:lecture][:tag_ids].nil?
+            @lecture.tags_from_params(params)
+          end
+
+          unless params[:tag][:tag_name].empty?
+            @lecture.tags << Tag.create(tag_name: params[:tag][:tag_name])
+          end
+
+          redirect "/lectures/#{@lecture.slug}"
+        else
+          @message = @lecture.errors.full_messages
+
+          erb :'lectures/new'
         end
-
-        unless params[:tag][:tag_name].empty?
-          @lecture.tags << Tag.create(tag_name: params[:tag][:tag_name])
-        end
-
-        redirect "/lectures/#{@lecture.slug}"
       else
-        @message = @lecture.errors.full_messages
-
+        @message = ["Please make sure to user a valid youtube link."]
         erb :'lectures/new'
       end
+
     else
       redirect "/login"
     end
@@ -88,6 +94,11 @@ class LecturesController < ApplicationController
 
       erb :'lectures/edit'
     end
+  end
 
+  helpers do
+    def valid_url?(url)
+      url.include?("youtube.com/watch?v=")
+    end
   end
 end
