@@ -29,7 +29,8 @@
 
 ## To-Do
 * Find testers!
-
+* Review RESTful architecture
+  * Determine if any new actions should be added (lecture/delete?)
 
 ## Done
 * Migrations
