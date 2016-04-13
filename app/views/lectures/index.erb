@@ -1,9 +1,18 @@
 <h1>All Lectures</h1>
 <br>
-<a href="/lectures/new"><button>New Lecture</button></a>
+<% if !!@message %>
+  <div class="alert alert-<%= @message.status %>">
+    <p><%= @message.content %></p>
+  </div>
+<% end %>
+<a href="/lectures/new"><button class="btn btn-success">Add New Lecture</button></a>
 <br><br>
-<ul>
-  <% @lectures.each do |lecture| %>
-    <li><a href="/lectures/<%= lecture.slug %>"><%= lecture.title %></a> - <%= lecture.user.learn_name %></li>
-  <% end %>
-</ul>
+<% if @lectures.empty? %>
+  <p>Looks like no one has added any lectures yet.  Click the button above to be the first!</p>
+<% else %>
+  <ul class="index-list">
+    <% @sorted_lectures.each do |lecture| %>
+      <li><p><%= lecture.date_created %> <strong>//<span class="glyphicon glyphicon-heart" style="color:red;"></span> <a href="/lectures/<%= lecture.slug %>"><%= lecture.title %></strong></a> by <%= lecture.user.learn_name %></p></li>
+    <% end %>
+  </ul>
+<% end %>

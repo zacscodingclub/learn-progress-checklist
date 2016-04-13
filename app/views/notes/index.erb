@@ -1,6 +1,7 @@
 <h1>All Notes</h1>
-<ul>
+
+<ul class="index-list">
   <% @notes.each do |note| %>
-    <li><a href="/lectures/<%= note.lecture.slug %>"><%= note.lecture.title %>  ~<%= note.content.split(" ").size %> word note</a></li>
+    <li><a href="/lectures/<%= note.lecture.slug %>"><strong><%= note.lecture.title %></strong></a>  ~<%= note.content.split(" ").size %> word note by <%= note.user.learn_name %>.</li>
   <% end %>
 </ul>

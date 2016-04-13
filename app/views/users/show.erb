@@ -1,8 +1,8 @@
 
-<h1>Profile</h1>
-<p>Welcome, <%= @user.learn_name %></p>
+<h1><%= @user.learn_name %>'s Profile</h1>
+
 <% if current_user.id == @user.id %>
-  <a href="/users/<%= @current_user.learn_name %>/edit"><button>Edit Profile</button></a>
+  <a href="/users/<%= @current_user.learn_name %>/edit"><button class="btn btn-primary">Edit Profile</button></a>
 <% end %>
 <h3>Lectures</h3>
 <% if @user.lectures.empty? %>

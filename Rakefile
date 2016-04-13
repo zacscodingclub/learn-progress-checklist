@@ -5,23 +5,30 @@ require 'sinatra/activerecord/rake'
 
 # Type `rake -T` on your command line to see the available rake tasks.
 
-task :console do 
-  zac = User.create(email: "email@example.com", learn_name: "zacscodingclub", password: "test")
-  avi = User.create(email: "avi@example.com", learn_name: "aviflombaum", password: "test")
+task :console do
+  Rake::Task["seed"].invoke
 
-  l1 = Lecture.create(title: "Lecture One", url: "http://lectureone.com", user_id: zac.id)
-  l2 = Lecture.create(title: "Lecture Two", url: "http://lecturetwo.com", user_id: avi.id)
-
-  n1 = Note.create(content: "First note", user_id: avi.id, lecture_id: l1.id)
-  n2 = Note.create(content: "Second note", user_id: zac.id, lecture_id: l1.id)
-
-  t1 = Tag.create(tag_name: "ruby", lecture_id: l1.id)
-  t2 = Tag.create(tag_name: "ruby", lecture_id: l2.id)
-  
   Pry.start
 
+  Rake::Task["clean_db"].invoke
+end
+
+task :clean_db do
   User.destroy_all
   Lecture.destroy_all
   Note.destroy_all
   Tag.destroy_all
+end
+
+task :seed do
+  ["ruby", "rack", "activerecord", "sinatra", "OO", "rails", "javascript","ajax", "html/css", "mvc", "enumerable", "miscellaneous"].each do |tag|
+    Tag.create(tag_name: tag)
+  end
+
+  admin = User.create(email: "zbaston+admin@gmail.com", learn_name: "none-fwiw", password: "test")
+  zac = User.create(email: "zbaston@gmail.com", learn_name: "zacscodingclub", password: "test")
+  user = User.create(email: "user@example.com", learn_name: "user-one", password: "test")
+
+  n1 = Note.create(content: "First note", user_id: user.id, lecture_id: l1.id)
+  n2 = Note.create(content: "Second note", user_id: zac.id, lecture_id: l1.id)
 end

@@ -3,6 +3,7 @@ class LecturesController < ApplicationController
   get '/lectures' do
     if logged_in?
       @lectures = Lecture.all
+      @sorted_lectures = @lectures.sort_by { |l| l.date_created }.reverse
 
       erb :'lectures/index'
     else
@@ -19,20 +20,26 @@ class LecturesController < ApplicationController
   end
 
   post '/lectures' do
-    if params[:lecture][:title].empty? || params[:lecture][:url].empty?
-      redirect "/lectures/new"
-    elsif logged_in?
-      @lecture = Lecture.create(title: params[:lecture][:title], url: params[:lecture][:url], user_id: current_user.id)
-      binding.pry
-      unless params[:lecture][:tag_ids].empty?
-        @lecture.tags << Tag.create(tag_name: params[:lecture][:tag_ids], lecture_id: @lecture.id)
-      end
+    if logged_in?
+      params[:lecture][:user_id] = current_user.id
 
-      unless params[:tag][:tag_name].empty?
-        @lecture.tags << Tag.create(tag_name: params[:tag][:tag_name], lecture_id: @lecture.id)
-      end
+      @lecture = Lecture.new_from_params(params)
 
-      redirect "/lectures/#{@lecture.slug}"
+      if @lecture.save
+        unless params[:lecture][:tag_ids].nil?
+          @lecture.tags_from_params(params)
+        end
+
+        unless params[:tag][:tag_name].empty?
+          @lecture.tags << Tag.create(tag_name: params[:tag][:tag_name])
+        end
+
+        redirect "/lectures/#{@lecture.slug}"
+      else
+        @message = @lecture.errors.full_messages
+
+        erb :'lectures/new'
+      end
     else
       redirect "/login"
     end
@@ -44,6 +51,37 @@ class LecturesController < ApplicationController
       erb :'lectures/show'
     else
       redirect "/login"
+    end
+
+  end
+
+  get '/lectures/:slug/edit' do
+    @lecture = Lecture.find_by_slug(params[:slug])
+
+    if current_user.id == @lecture.user.id
+      erb :'lectures/edit'
+    else
+      @message = "You do not have the permissions to see that page."
+
+      redirect "/"
+    end
+  end
+
+  patch '/lectures/:slug' do
+    @lecture = Lecture.find_by_slug(params[:slug])
+
+    if logged_in?
+      @lecture.update_from_params(params)
+
+      unless params[:lecture][:tag_ids].nil?
+        @lecture.tags_from_params(params)
+      end
+
+      erb :'lectures/show'
+    else
+      @message = @lecture.errors.full_messages
+
+      erb :'lectures/new'
     end
 
   end

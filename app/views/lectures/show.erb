@@ -3,12 +3,12 @@
 <div class="row">
   <div class="col-md-6">
     <iframe width="550" height="415" src="<%= @lecture.embed_url %>" frameborder="0" allowfullscreen></iframe>
-    <p><%= @lecture.user.learn_name %> made this video.</p>
+    <p><%= @lecture.user.learn_name %> made this video on <%= @lecture.date_created %>.</p>
     <% if @lecture.user_id == current_user.id %>
       <a href="/lectures/<%= @lecture.slug %>/edit"><button>Edit</button></a>
     <% end %>
     <br>
-    <% if !@lecture.tags.empty? %>
+    <% unless @lecture.tags.empty? %>
       <h4>Tags</h4>
       <% @lecture.tags.each do |tag| %>
         <button><%= tag.tag_name %></button>
@@ -26,14 +26,14 @@
     </form>
 
     <% if @lecture.notes.empty? %>
-      <p>Be the first to take a note!</p>
+      <h3>Be the first to take a note!</h3>
     <% else %>
-      <h4>Other People's Notes</h4>
+      <h4>Notes</h4>
       <ul>
         <% @lecture.notes.each do |note| %>
           <li><strong><%= User.find(note.user_id).learn_name %></strong> - <%= note.content %></li>
         <% end %>
-      </ul>  
+      </ul>
     <% end %>
   </div>
 </div>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -13,35 +14,59 @@
       * {
         margin:1px;
       }
-      ul {
-        list-style: none
+      html {
+        background-color: #fff;
       }
-      /*.container {
+      iframe {
+        background-color: black;
+        padding:35px;
         border: 1px solid black;
-      */}
+        border-radius: 7px;
+      }
+      .index-list {
+        list-style: none;
+      }
+
     </style>
     <title>Learn Progress</title>
   </head>
-  <div class="container">
-    <div class="pull-left">
-      <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <% if breadcrumbs %>
-          <li class="active"><a href="/<%= breadcrumbs %>"><%= breadcrumbs.capitalize %></a></li>
-        <% end %>
-      </ol>
-      
-        
-    </div>
-    <% if logged_in? %>
-      <div class="pull-right">
-        Welcome, <%= current_user.learn_name %>
-        <a href="/logout"><button>Logout</button></a>
-      </div>
-    <% end %>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><strong style="color:black;">//</strong></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+              <% if breadcrumbs %>
+                <li class="active"><a href="/<%= breadcrumbs %>"><%= breadcrumbs.capitalize %></a></li>
+              <% end %>
+            </ul>
+            <% if logged_in? %>
+              <div class="nav navbar-nav navbar-right">
+                <p class="navbar-text">Welcome, <%= current_user.learn_name %></p>
+                <button type="button" class="btn btn-default navbar-btn"><a href="/logout">Logout</a></button>
+
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </nav>
       <br>
 
+      <%= yield %>
 
-    <%= yield %>
-  </div>
+    </div>
+  </body>
 </html>

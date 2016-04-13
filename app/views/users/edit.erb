@@ -1,12 +1,20 @@
 <h1>Create an Account:</h1>
 
-<form action="/users/<%= @user.learn_name %>" method="post">
-  <label for="email">Email</label>
-  <input type="text" name="email" value="<%= @user.email %>">
+<form action="/users/<%= @user.learn_name %>" method="post" class="form-horizontal text-center">
+  <div class="form-group">
+    <label for="email" id="email" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-4">
+      <input type="text" name="email" id="email" value="<%= @user.email %>" class="form-control">
+    </div>
+  </div>
   <br>
-  <label for="learn_name">Your name on Learn-Co</label>
-  <input type="text" name="learn_name" value="<%= @user.learn_name %>">
+  <div class="form-group">
+    <label for="learn_name" id="learn_name" class="col-sm-2 control-label">Learn Verified Name</label>
+    <div class="col-sm-4">
+      <input type="text" name="learn_name" id="learn_name" value="<%= @user.learn_name %>" class="form-control">
+    </div>
+  </div>
   <br>
   <input type="hidden" type="hidden" id="hidden" name="_method" value="PATCH">
-  <input type="submit" name="submit" value="Edit">
+  <input type="submit" name="submit" value="Edit" class="btn btn-primary">
 </form>

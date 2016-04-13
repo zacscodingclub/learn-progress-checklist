@@ -13,9 +13,12 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
+
       redirect "/lectures"
     else
-      redirect "/signup"
+      @message = @user.errors.full_messages
+
+      erb :'users/new'
     end
   end
 
@@ -32,7 +35,13 @@ class UsersController < ApplicationController
 
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect "/lectures"
+
+      @message = {
+        content: "Successfully logged in!",
+        status: "success"
+      }
+
+       redirect "/lectures"
     else
       redirect "/login"
     end
@@ -67,13 +76,12 @@ class UsersController < ApplicationController
   end
 
   get '/users/:slug/edit' do
+    @user = User.find_by_learn_name(params[:slug])
 
-    if logged_in?
-      @user = User.find_by_learn_name(params[:slug])
-
+    if current_user.id == @user.id
       erb :'users/edit'
     else
-      redirect "/login"
+      redirect "/"
     end
   end
 

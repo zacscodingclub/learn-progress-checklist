@@ -1,13 +1,19 @@
-<% if logged_in? %>
-  <h1>Hi <%= current_user.learn_name %>.</h1>
-  <h3>Welcome to the Learn-Co Lecture notes!</h3>
-  <p>Let's start learnin!</p>
-  <a href="/lectures"><button>Lectures</button></a>
-  <a href="/notes"><button>Notes</button></a>
-  <a href="/users"><button>Users</button></a>
-<% else %>
-  <h1>Hi.</h1>
-  <h3>Welcome to the Learn-Co Lecture notes!</h3>
-  <p>Let's start learnin!</p>
-  <a href="/signup"><button>New User?</button></a><a href="/login"><button>Login</button></a>
-<% end %>
+<div class="jumbotron text-center">
+  <% if logged_in? %>
+    <h1>Hi <%= current_user.learn_name %>.</h1>
+    <h3>Welcome to the Learn-Co Lecture notes!</h3>
+    <p>Let's start learnin!</p>
+    <a href="/lectures"><button class="btn btn-default btn-lg">Lectures</button></a>
+    <a href="/notes"><button class="btn btn-default btn-lg">Notes</button></a>
+    <a href="/users"><button class="btn btn-default btn-lg">Users</button></a>
+  <% else %>
+    <h1>Hi.</h1>
+    <h3>Welcome to the Learn-Co Lecture notes!</h3>
+    <p>Let's git learning.</p>
+
+    <div class="btn-group btn-group-lg" role="group">
+      <a href="/signup"><button type="button" class="btn btn-default btn-lg">New User?</button></a>
+      <a href="/login"><button type="button" class="btn btn-default btn-lg">Login</button></a>
+    </div>
+  <% end %>
+</div>
