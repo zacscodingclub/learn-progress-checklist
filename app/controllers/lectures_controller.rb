@@ -26,6 +26,7 @@ class LecturesController < ApplicationController
       @lecture = Lecture.new_from_params(params)
 
       if @lecture.save
+
         unless params[:lecture][:tag_ids].nil?
           @lecture.tags_from_params(params)
         end
@@ -70,18 +71,22 @@ class LecturesController < ApplicationController
   patch '/lectures/:slug' do
     @lecture = Lecture.find_by_slug(params[:slug])
 
-    if logged_in?
+    if current_user.id == @lecture.user.id
       @lecture.update_from_params(params)
 
       unless params[:lecture][:tag_ids].nil?
         @lecture.tags_from_params(params)
       end
 
+      unless params[:tag][:tag_name].empty?
+        @lecture.tags << Tag.create(tag_name: params[:tag][:tag_name])
+      end
+
       erb :'lectures/show'
     else
       @message = @lecture.errors.full_messages
 
-      erb :'lectures/new'
+      erb :'lectures/edit'
     end
 
   end

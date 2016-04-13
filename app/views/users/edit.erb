@@ -1,4 +1,17 @@
-<h1>Create an Account:</h1>
+<h1>Edit Your Account:</h1>
+
+<% if @message %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @message.each do |message| %>
+        <li><strong><%= message %></strong></li>
+      <% end %>
+
+      <li>Please try again.</li>
+    </ul>
+  </div>
+<% end %>
+<br>
 
 <form action="/users/<%= @user.learn_name %>" method="post" class="form-horizontal text-center">
   <div class="form-group">

@@ -14,6 +14,12 @@ class Lecture < ActiveRecord::Base
     self.url.gsub("watch?v=","embed/")
   end
 
+  def datetime_created
+    split = self.date_created.split(/[\/-]/)
+
+    datetime_created = Date.strptime("{#{split[0]}, #{split[1]}, #{split[2]}}", "{%Y, %m, %d}")
+  end
+
   def self.new_from_params(params)
     @lecture = Lecture.new(title: params[:lecture][:title],
                                 url: params[:lecture][:url],
@@ -22,6 +28,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def tags_from_params(params)
+
     new_tags = params[:lecture][:tag_ids]
     prev_tags = self.tags.collect { |t| t.tag_name }
 

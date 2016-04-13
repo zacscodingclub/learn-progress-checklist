@@ -32,18 +32,18 @@ class UsersController < ApplicationController
 
   post '/login' do
     @user = User.find_by(email: params[:email])
+    if @user.nil?
+      @message = ["User not found.  Please try again."]
 
-    if @user && @user.authenticate(params[:password])
+      erb :"users/new"
+    elsif @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-
-      @message = {
-        content: "Successfully logged in!",
-        status: "success"
-      }
 
        redirect "/lectures"
     else
-      redirect "/login"
+      @message = ["Password incorrect.  Please try again."]
+
+      erb :"users/login"
     end
   end
 
@@ -86,13 +86,20 @@ class UsersController < ApplicationController
   end
 
   patch '/users/:slug' do
-    if params[:email].empty? || params[:learn_name].empty?
-      redirect back
-    elsif logged_in?
-      @user = User.find_by_learn_name(params[:slug])
-      @user.update(email: params[:email],learn_name: params[:learn_name], password: @user.password_digest)
+    @user = User.find_by_learn_name(params[:slug])
 
-      erb :'users/show'
+    if current_user.id == @user.id
+      @user.email = params[:email]
+      @user.learn_name = params[:learn_name]
+
+      if @user.save
+        user_path = "/users/#{@user.learn_name}"
+        redirect user_path
+      else
+        @message = @user.errors.full_messages
+
+        erb :'users/edit'
+      end
     else
       redirect "/login"
     end

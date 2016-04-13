@@ -12,7 +12,7 @@
 <% else %>
   <ul class="index-list">
     <% @sorted_lectures.each do |lecture| %>
-      <li><p><%= lecture.date_created %> <strong>//<span class="glyphicon glyphicon-heart" style="color:red;"></span> <a href="/lectures/<%= lecture.slug %>"><%= lecture.title %></strong></a> by <%= lecture.user.learn_name %></p></li>
+      <li><p><%= lecture.datetime_created.strftime("%b %d, %Y") %>  <strong> // <span class="glyphicon glyphicon-heart" style="color:red;"></span> <a href="/lectures/<%= lecture.slug %>"><%= lecture.title %></strong></a> by <%= lecture.user.learn_name %></p></li>
     <% end %>
   </ul>
 <% end %>
