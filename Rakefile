@@ -22,7 +22,7 @@ task :clean_db do
 end
 
 task :seed do
-  ["ruby", "rack", "activerecord", "sinatra", "OO", "rails", "javascript","ajax", "html/css", "mvc", "enumerable", "miscellaneous"].each do |tag|
+  ["ruby", "rack", "activerecord", "sinatra", "OO", "rails", "javascript","ajax", "html", "css", "mvc", "enumerable", "miscellaneous"].each do |tag|
     Tag.create(tag_name: tag)
   end
 

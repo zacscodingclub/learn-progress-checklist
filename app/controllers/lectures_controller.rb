@@ -38,6 +38,7 @@ class LecturesController < ApplicationController
 
           redirect "/lectures/#{@lecture.slug}"
         else
+          binding.pry
           @message = @lecture.errors.full_messages
 
           erb :'lectures/new'

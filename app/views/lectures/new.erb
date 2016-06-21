@@ -1,6 +1,5 @@
 <h1>Make a New Lecture</h1>
 
-<% binding.pry %>
 <% if @message %>
   <div class="alert alert-danger">
     <ul>
@@ -18,7 +17,7 @@
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">Title</label>
     <div class="col-sm-4">
-      <input type="text" name="lecture[title]" id="title" class="form-control">
+      <input type="text" name="lecture[title]" id="title" class="form-control" value="<%= params[:lecture][:title] if !params.empty? %>">
     </div>
   </div>
   <br>

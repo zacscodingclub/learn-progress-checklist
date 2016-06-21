@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  validates_presence_of :password_digest
   validates :email, presence: true, uniqueness: true
   validates :learn_name, presence: true, uniqueness: true
 

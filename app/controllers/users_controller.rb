@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   post '/login' do
     @user = User.find_by(email: params[:email])
     if @user.nil?
-      @message = ["User not found.  Please try again."]
+      @message = ["User not found. "]
 
       erb :"users/new"
     elsif @user && @user.authenticate(params[:password])
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
        redirect "/lectures"
     else
-      @message = ["Password incorrect.  Please try again."]
+      @message = ["Password incorrect."]
 
       erb :"users/login"
     end
